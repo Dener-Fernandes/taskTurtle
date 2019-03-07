@@ -1,2 +1,2 @@
-# Select all HTML files and replace with Python as primary language tag on GitHub.
-*.HTML linguist-language=Python
+# Select all HTML files and replace with Python as primary language tag on GitHub. Case-sensitive.
+*.html linguist-language=Python
