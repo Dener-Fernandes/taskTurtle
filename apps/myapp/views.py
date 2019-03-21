@@ -6,7 +6,13 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 def index(request):
-    return render(request, 'myapp/index.html')
+    template = 'myapp/index.html'
+
+    context = {
+        'template': template
+    }
+
+    return render(request, template)
 
 def register(request):
     if request.method == 'POST':
@@ -93,23 +99,34 @@ def dashboard(request):
     other_jobs = Job.objects.exclude(poster=user)
     my_work = user.added_work.all()
 
+    template = 'myapp/dashboard.html'
+
     context = {
         'user': user,
         'my_jobs': my_jobs,
         'other_jobs': other_jobs,
         'my_work': my_work,
+        'template': template
     }
-    return render(request, 'myapp/dashboard.html', context)
+    return render(request, template, context)
 
 def create(request):
     user = User.objects.get(id=request.session['user_id'])
 
+    template = 'myapp/create.html'
+
     context = {
         'user': user,
+        'template': template
     }
-    return render(request, 'myapp/create.html', context)
+    return render(request, template, context)
 
 def createProcess(request):
+    template = 'myapp/create.html'
+    context = {
+        'template': template
+    }
+
     if request.method == "POST":
 
         # Validations for creating a new task
@@ -128,7 +145,7 @@ def createProcess(request):
             messages.error(request, 'Please enter a location.')
             
         if has_errors:
-            return render(request, 'myapp/create.html')
+            return render(request, template, context)
 
         # Create new task
         else:
@@ -146,26 +163,33 @@ def createProcess(request):
     return redirect('/dashboard')
 
 def view(request, job_id):
+    template = 'myapp/view.html'
+
     context = {
         'job': Job.objects.get(id=job_id),
+        'template': template
     }
-    return render(request, 'myapp/view.html', context)
+    return render(request, template, context)
 
 def update(request, job_id):
     user = User.objects.get(id=request.session['user_id'])
+    template = 'myapp/update.html'
 
     context = {
-        'job': Job.objects.get(id=job_id)
+        'job': Job.objects.get(id=job_id),
+        'template': template
     }
 
-    return render(request, 'myapp/update.html', context)
+    return render(request, template, context)
 
 def updateProcess(request, job_id):
     if request.method == "POST":
         user = User.objects.get(id=request.session['user_id'])
+        template = 'myapp/update.html'
 
         context = {
             'user': user,
+            'template': template,
         }
 
         # Prepopulate form from DB
@@ -189,7 +213,7 @@ def updateProcess(request, job_id):
             messages.error(request, 'Please enter a location.')
             
         if has_errors:
-            return render(request, 'myapp/update.html', context)
+            return render(request, template, context)
 
         # Save changes to updates
         else:
@@ -204,10 +228,13 @@ def updateProcess(request, job_id):
     return redirect('/dashboard', context)
 
 def delete(request, job_id):
+    template = 'myapp/delete.html'
+
     context = {
-        'job': Job.objects.get(id=job_id)
+        'job': Job.objects.get(id=job_id),
+        'template': template
     }
-    return render(request, 'myapp/delete.html', context)
+    return render(request, template, context)
 
 def confirm(request, job_id):
     task = Job.objects.get(id=job_id)

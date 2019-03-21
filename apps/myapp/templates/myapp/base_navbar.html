@@ -1,0 +1,31 @@
+{% block styles %}
+<style>
+    a.nav-link {
+        color: white !important;
+    }
+
+    a.nav-link:hover {
+        color: #ffc107 !important;
+    }
+</style>
+{% endblock %}
+
+<!--NAVBAR-->
+<div class="container-fluid">
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="/dashboard">TASK TURTLE</a>
+
+        <ul class="nav justify-content">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/create">Post a Task</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log Out</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!--nav container-->
